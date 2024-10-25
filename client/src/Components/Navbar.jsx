@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import "../App.css";
+
 import {
   FaFacebook,
   FaSquareTwitter,
@@ -45,7 +47,14 @@ const Navbar = () => {
         <ul className=" md:flex gap-12 text-lg hidden">
           {navItems.map((item, index) => (
             <li key={index} className="text-white">
-              <NavLink to={item.path}>{item.label}</NavLink>
+              <NavLink
+                className={({ isActive, isPending }) =>
+                  isActive ? "active" : isPending ? "pending" : ""
+                }
+                to={item.path}
+              >
+                {item.label}
+              </NavLink>
             </li>
           ))}
         </ul>
@@ -76,10 +85,18 @@ const Navbar = () => {
       </nav>
 
       <div>
-        <ul className=" md:flex gap-12 text-lg hidden">
+        <ul
+          className={`md:hidden block space-y-4 gap-12 text-lg px-4 py-6 bg-white mt-14 ${
+            isMenuOpen
+              ? "fixed top-0 left-0 w-full transition-all ease-out duration-150"
+              : " hidden"
+          }`}
+        >
           {navItems.map((item, index) => (
-            <li key={index} className="text-white">
-              <NavLink to={item.path}>{item.label}</NavLink>
+            <li key={index} className="text-black">
+              <NavLink onClick={toggleMenu} to={item.path}>
+                {item.label}
+              </NavLink>
             </li>
           ))}
         </ul>
